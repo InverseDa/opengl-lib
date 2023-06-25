@@ -1,0 +1,60 @@
+# 基于 Google 风格
+BasedOnStyle: Google
+
+# 指定 Tab 宽度为 4 个空格
+TabWidth: 4
+
+# 指定缩进宽度为 4 个空格
+IndentWidth: 4
+
+# 使用空格而不是制表符进行缩进
+UseTab: Never
+
+# 指定行宽为 80 个字符
+ColumnLimit: 80
+
+# 是否在宏定义中保留空格
+SpacesInMacro: None
+
+# 控制函数调用的对齐方式
+AlignAfterOpenBracket: Align
+AlignConsecutiveAssignments: true
+AlignConsecutiveDeclarations: true
+AlignEscapedNewlinesLeft: true
+AlignOperands:   true
+
+# 控制注释的对齐方式
+AlignTrailingComments: true
+BreakBeforeInheritanceComma: false
+BreakBeforeBinaryOperators: false
+BreakBeforeTernaryOperators: false
+BreakBeforeBraces: Allman
+BreakConstructorInitializersBeforeComma: false
+CompactNamespaces: false
+ConstructorInitializerIndentWidth: 4
+Cpp11BracedListStyle: false
+DerivePointerAlignment: false
+IndentCaseLabels: true
+IndentPPDirectives: None
+IndentWidth: 4
+IndentWrappedFunctionNames: false
+JavaScriptQuotes: Single
+KeepEmptyLinesAtTheStartOfBlocks: false
+NamespaceIndentation: None
+ObjCBlockIndentWidth: 4
+ObjCSpaceAfterProperty: false
+PenaltyBreakComment: 300
+PenaltyBreakString: 1000
+PointerAlignment: Left
+ReflowComments: false
+SortIncludes: true
+SpaceAfterCStyleCast: false
+SpaceBeforeParens: ControlStatements
+SpacesInAngles:  false
+SpacesInContainerLiterals: true
+SpacesInCStyleCastParentheses: false
+SpacesInParentheses: false
+SpacesInSquareBrackets: false
+Standard: Cpp11
+TabWidth: 4
+UseTab: Never
