@@ -49,9 +49,9 @@ std::shared_ptr<WindowWrapper>
 WindowWrapper::createWindow(int width, int height, std::string &&title,
                             int major_version, int minor_version, Type type) {
   Init::getInstance(major_version, minor_version, type);
-  auto window = std::make_shared<WindowWrapper>(
+  auto wrapper = std::make_shared<WindowWrapper>(
       width, height, std::move(title), major_version, minor_version, type);
-  return window;
+  return wrapper;
 }
 
 void WindowWrapper::mainLoop(std::function<void()> callback) const {
@@ -63,7 +63,8 @@ void WindowWrapper::mainLoop(std::function<void()> callback) const {
   }
 }
 
-WindowWrapper::~WindowWrapper() { glfwTerminate(); }
+WindowWrapper::~WindowWrapper() { // TODO: 关闭窗口
+}
 
 GLFWwindow *WindowWrapper::get() const { return window.get(); }
 

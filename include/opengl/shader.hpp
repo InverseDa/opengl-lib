@@ -11,11 +11,16 @@
 #include <string>
 
 class Shader {
-public:
+private:
   unsigned int id;
 
+public:
   Shader(const std::string &vertexShaderPath,
          const std::string &fragmentShaderPath);
+
+  static std::shared_ptr<Shader>
+  createShader(const std::string &vertexShaderPath,
+               const std::string &fragmentShaderPath);
 
   void use() const;
 

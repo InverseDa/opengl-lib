@@ -1,5 +1,11 @@
 #include "opengl/shader.hpp"
 
+std::shared_ptr<Shader>
+Shader::createShader(const std::string &vertexShaderPath,
+                     const std::string &fragmentShaderPath) {
+  return std::make_shared<Shader>(vertexShaderPath, fragmentShaderPath);
+}
+
 Shader::Shader(const std::string &vertexShaderPath,
                const std::string &fragmentShaderPath) {
   // 转成绝对路径
