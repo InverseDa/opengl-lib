@@ -33,9 +33,8 @@ private:
   std::shared_ptr<GLFWwindow> window;
 
 public:
-  WindowWrapper(int width = 800, int height = 600,
-                std::string &&title = "GLFW Window", int major_version = 3,
-                int minor_version = 3, Type type = CORE);
+  WindowWrapper(int width, int height, std::string &&title, int major_version,
+                int minor_version, Type type);
   ~WindowWrapper();
   // Create a new window
   static std::shared_ptr<WindowWrapper>

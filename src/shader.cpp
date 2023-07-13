@@ -8,11 +8,10 @@ Shader::createShader(const std::string &vertexShaderPath,
 
 Shader::Shader(const std::string &vertexShaderPath,
                const std::string &fragmentShaderPath) {
-  // 转成绝对路径
+  // Read shader source code
   std::string vshAbsoulutePath = std::filesystem::absolute(vertexShaderPath);
   std::string fshAbsoulutePath = std::filesystem::absolute(fragmentShaderPath);
 
-  // 读取文件
   std::string vertexCode;
   std::string fragmentCode;
   std::ifstream vShaderFile;
@@ -21,17 +20,17 @@ Shader::Shader(const std::string &vertexShaderPath,
   vShaderFile.exceptions(std::ifstream::failbit | std::ifstream::badbit);
   fShaderFile.exceptions(std::ifstream::failbit | std::ifstream::badbit);
   try {
-    // 打开文件
+    // Open files
     vShaderFile.open(vertexShaderPath);
     fShaderFile.open(fragmentShaderPath);
     std::stringstream vShaderStream, fShaderStream;
-    // 读取文件的缓冲内容到数据流中
+    // Load file's buffer contents into streams
     vShaderStream << vShaderFile.rdbuf();
     fShaderStream << fShaderFile.rdbuf();
-    // 关闭文件处理器
+    // Close file handlers
     vShaderFile.close();
     fShaderFile.close();
-    // 转换数据流到string
+    // to string
     vertexCode = vShaderStream.str();
     fragmentCode = fShaderStream.str();
   } catch (std::ifstream::failure e) {
@@ -41,44 +40,47 @@ Shader::Shader(const std::string &vertexShaderPath,
   const char *vShaderCode = vertexCode.c_str();
   const char *fShaderCode = fragmentCode.c_str();
 
-  // 编译着色器
+  // Compile shaders
   unsigned int vertex, fragment;
   int success;
   char infoLog[512];
-  // 顶点着色器
+  // Vertex shader
   vertex = glCreateShader(GL_VERTEX_SHADER);
   glShaderSource(vertex, 1, &vShaderCode, nullptr);
   glCompileShader(vertex);
-  // 打印错误信息
+  // Print compile errors if any
   glGetShaderiv(vertex, GL_COMPILE_STATUS, &success);
   if (!success) {
     glGetShaderInfoLog(vertex, 512, nullptr, infoLog);
-    throw std::runtime_error("Failed to compile vertex shader.");
+    std::cout << "ERROR::SHADER::VERTEX::COMPILATION_FAILED\n"
+              << infoLog << std::endl;
   }
-  // 片段着色器
+  // Fragment shader
   fragment = glCreateShader(GL_FRAGMENT_SHADER);
   glShaderSource(fragment, 1, &fShaderCode, nullptr);
   glCompileShader(fragment);
-  // 打印错误信息
+  // Print compile errors if any
   glGetShaderiv(fragment, GL_COMPILE_STATUS, &success);
   if (!success) {
     glGetShaderInfoLog(fragment, 512, nullptr, infoLog);
-    throw std::runtime_error("Failed to compile fragment shader.");
+    std::cout << "ERROR::SHADER::FRAGMENT::COMPILATION_FAILED\n"
+              << infoLog << std::endl;
   }
 
-  // 链接着色器程序
+  // Link shader
   id = glCreateProgram();
   glAttachShader(id, vertex);
   glAttachShader(id, fragment);
   glLinkProgram(id);
-  // 打印连接错误（如果有的话）
+  // Print link errors if any
   glGetProgramiv(id, GL_LINK_STATUS, &success);
   if (!success) {
     glGetProgramInfoLog(id, 512, nullptr, infoLog);
-    throw std::runtime_error("Failed to link shader.");
+    std::cout << "ERROR::SHADER::PROGRAM::LINKING_FAILED\n"
+              << infoLog << std::endl;
   }
 
-  // 删除着色器，因为已经链接到程序了
+  // Delete Shader
   glDeleteShader(vertex);
   glDeleteShader(fragment);
 }
@@ -86,7 +88,7 @@ Shader::Shader(const std::string &vertexShaderPath,
 void Shader::use() const { glUseProgram(id); }
 
 void Shader::setBool(const std::string &name, bool value) const {
-  glUniform1i(glGetUniformLocation(id, name.c_str()), (int)value);
+  glUniform1i(glGetUniformLocation(id, name.c_str()), static_cast<int>(value));
 }
 
 void Shader::setInt(const std::string &name, int value) const {

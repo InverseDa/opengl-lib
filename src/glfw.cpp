@@ -55,8 +55,8 @@ WindowWrapper::createWindow(int width, int height, std::string &&title,
 }
 
 void WindowWrapper::mainLoop(std::function<void()> callback) const {
+  makeContextCurrent();
   while (!shouldClose()) {
-    makeContextCurrent();
     callback();
     swapBuffers();
     pollEvents();
