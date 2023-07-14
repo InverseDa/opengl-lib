@@ -9,8 +9,10 @@ Shader::createShader(const std::string &vertexShaderPath,
 Shader::Shader(const std::string &vertexShaderPath,
                const std::string &fragmentShaderPath) {
   // Read shader source code
-  std::string vshAbsoulutePath = std::filesystem::absolute(vertexShaderPath);
-  std::string fshAbsoulutePath = std::filesystem::absolute(fragmentShaderPath);
+  std::string vshAbsoulutePath =
+      std::filesystem::absolute(vertexShaderPath).string();
+  std::string fshAbsoulutePath =
+      std::filesystem::absolute(fragmentShaderPath).string();
 
   std::string vertexCode;
   std::string fragmentCode;
@@ -21,8 +23,8 @@ Shader::Shader(const std::string &vertexShaderPath,
   fShaderFile.exceptions(std::ifstream::failbit | std::ifstream::badbit);
   try {
     // Open files
-    vShaderFile.open(vertexShaderPath);
-    fShaderFile.open(fragmentShaderPath);
+    vShaderFile.open(vshAbsoulutePath);
+    fShaderFile.open(fshAbsoulutePath);
     std::stringstream vShaderStream, fShaderStream;
     // Load file's buffer contents into streams
     vShaderStream << vShaderFile.rdbuf();

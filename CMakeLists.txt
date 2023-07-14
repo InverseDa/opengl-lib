@@ -8,6 +8,12 @@ include_directories(${PROJECT_SOURCE_DIR}/include)
 
 add_executable(main src/glad.c src/glfw.cpp src/shader.cpp src/main.cpp)
 
-find_package(glfw3 REQUIRED)
+if(LINUX)
+    find_package(glfw3 REQUIRED)
+    target_link_libraries(main glfw)
+endif(LINUX)
 
-target_link_libraries(main glfw)
+if(WIN32)
+    target_link_libraries(main PRIVATE ${PROJECT_SOURCE_DIR}/lib/windows-x86_64/glfw3.lib)
+    target_link_libraries(main PRIVATE ${PROJECT_SOURCE_DIR}/lib/windows-x86_64/freetype.lib)
+endif(WIN32)
