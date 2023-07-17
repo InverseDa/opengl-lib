@@ -86,8 +86,24 @@ inline void Mesh::draw(Shader &shader) {
 
 // ========================== Triangle ==========================
 
-Triangle::Triangle(std::vector<SimpleVertex> vertices) : m_vertices(vertices) {
+Triangle::Triangle(std::vector<glm::vec3> position,
+                   std::vector<glm::vec3> colors) {
+  m_vertices = std::vector<__vertex>{{position[0], colors[0]},
+                                     {position[1], colors[1]},
+                                     {position[2], colors[2]}};
   m_indices = std::vector<GLuint>{0, 1, 2};
+  setup();
+}
+
+Triangle::Triangle(std::vector<glm::vec3> position,
+                   std::vector<glm::vec2> texCoords,
+                   std::vector<Texture> textures) {
+  m_vertices =
+      std::vector<__vertex>{{position[0], glm::vec3(0.0f), texCoords[0]},
+                            {position[1], glm::vec3(0.0f), texCoords[1]},
+                            {position[2], glm::vec3(0.0f), texCoords[2]}};
+  m_indices = std::vector<GLuint>{0, 1, 2};
+  m_textures = textures;
   setup();
 }
 
@@ -99,7 +115,7 @@ void Triangle::setup() {
   glBindVertexArray(m_VAO);
   glBindBuffer(GL_ARRAY_BUFFER, m_VBO);
 
-  glBufferData(GL_ARRAY_BUFFER, m_vertices.size() * sizeof(Vertex),
+  glBufferData(GL_ARRAY_BUFFER, m_vertices.size() * sizeof(__vertex),
                &m_vertices[0], GL_STATIC_DRAW);
 
   glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_EBO);
@@ -108,33 +124,36 @@ void Triangle::setup() {
 
   // position
   glEnableVertexAttribArray(0);
-  glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(SimpleVertex),
+  glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(__vertex),
                         (GLvoid *)0);
 
   // color
   glEnableVertexAttribArray(1);
-  glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex),
-                        (GLvoid *)offsetof(SimpleVertex, color));
-
-  // normal
-  glEnableVertexAttribArray(2);
-  glVertexAttribPointer(2, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex),
-                        (GLvoid *)offsetof(SimpleVertex, normal));
+  glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, sizeof(__vertex),
+                        (GLvoid *)offsetof(__vertex, color));
 
   // texCoords
-  glEnableVertexAttribArray(3);
-  glVertexAttribPointer(3, 2, GL_FLOAT, GL_FALSE, sizeof(Vertex),
-                        (GLvoid *)offsetof(SimpleVertex, texCoords));
+  glEnableVertexAttribArray(2);
+  glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, sizeof(__vertex),
+                        (GLvoid *)offsetof(__vertex, texCoords));
+}
+
+std::shared_ptr<Triangle>
+Triangle::createTriangle(std::vector<glm::vec3> position,
+                         std::vector<glm::vec3> colors) {
+  return std::make_shared<Triangle>(position, colors);
+}
+
+std::shared_ptr<Triangle>
+Triangle::createTriangle(std::vector<glm::vec3> position,
+                         std::vector<glm::vec2> texCoords,
+                         std::vector<Texture> textures) {
+  return std::make_shared<Triangle>(position, texCoords, textures);
 }
 
 Triangle::~Triangle() {}
 
-std::shared_ptr<Triangle>
-Triangle::createTriangle(std::vector<SimpleVertex> vertices) {
-  return std::make_shared<Triangle>(vertices);
-}
-
-inline void Triangle::draw(Shader &shader) {
+void Triangle::draw(Shader &shader) {
   GLuint diffuseNr = 1;
   GLuint specularNr = 1;
   GLuint normalNr = 1;
@@ -163,7 +182,94 @@ inline void Triangle::draw(Shader &shader) {
 }
 
 // ========================== Quad ==========================
-// Quad::Quad(std::vector<SimpleVertex> vertices) : m_vertices(vertices) {
-//   m_indices = std::vector<GLuint>{0, 1, 2, 0, 2, 3};
-//   setup();
-// }
+Quad::Quad(std::vector<glm::vec3> position, std::vector<glm::vec3> colors)
+    : Triangle(position, colors) {
+  m_vertices = std::vector<__vertex>{{position[0], colors[0]},
+                                     {position[1], colors[1]},
+                                     {position[2], colors[2]},
+                                     {position[3], colors[3]}};
+  m_indices = std::vector<GLuint>{0, 1, 2, 0, 2, 3};
+  setup();
+}
+
+Quad::Quad(std::vector<glm::vec3> position, std::vector<glm::vec2> texCoords,
+           std::vector<Texture> textures)
+    : Triangle(position, texCoords, textures) {
+  m_vertices =
+      std::vector<__vertex>{{position[0], glm::vec3(0.0f), texCoords[0]},
+                            {position[1], glm::vec3(0.0f), texCoords[1]},
+                            {position[2], glm::vec3(0.0f), texCoords[2]},
+                            {position[3], glm::vec3(0.0f), texCoords[3]}};
+  m_indices = std::vector<GLuint>{0, 1, 2, 0, 2, 3};
+  m_textures = textures;
+  setup();
+}
+
+std::shared_ptr<Quad> Quad::createQuad(std::vector<glm::vec3> position,
+                                       std::vector<glm::vec3> colors) {
+  return std::make_shared<Quad>(position, colors);
+}
+
+std::shared_ptr<Quad> Quad::createQuad(std::vector<glm::vec3> position,
+                                       std::vector<glm::vec2> texCoords,
+                                       std::vector<Texture> textures) {
+  return std::make_shared<Quad>(position, texCoords, textures);
+}
+
+Quad::~Quad() {}
+
+// ========================== Cube ==========================
+Cube::Cube(std::vector<glm::vec3> position, std::vector<glm::vec3> colors)
+    : Quad(position, colors) {
+  m_vertices =
+      std::vector<__vertex>{{position[0], colors[0]}, {position[1], colors[1]},
+                            {position[2], colors[2]}, {position[3], colors[3]},
+                            {position[4], colors[4]}, {position[5], colors[5]},
+                            {position[6], colors[6]}, {position[7], colors[7]}};
+  m_indices = std::vector<GLuint>{
+      0, 1, 2, 0, 2, 3, // front
+      4, 5, 6, 4, 6, 7, // back
+      0, 1, 5, 0, 5, 4, // left
+      2, 3, 7, 2, 7, 6, // right
+      1, 2, 6, 1, 6, 5, // top
+      0, 3, 7, 0, 7, 4  // bottom
+  };
+  setup();
+}
+
+Cube::Cube(std::vector<glm::vec3> position, std::vector<glm::vec2> texCoords,
+           std::vector<Texture> textures)
+    : Quad(position, texCoords, textures) {
+  m_vertices =
+      std::vector<__vertex>{{position[0], glm::vec3(0.0f), texCoords[0]},
+                            {position[1], glm::vec3(0.0f), texCoords[1]},
+                            {position[2], glm::vec3(0.0f), texCoords[2]},
+                            {position[3], glm::vec3(0.0f), texCoords[3]},
+                            {position[4], glm::vec3(0.0f), texCoords[4]},
+                            {position[5], glm::vec3(0.0f), texCoords[5]},
+                            {position[6], glm::vec3(0.0f), texCoords[6]},
+                            {position[7], glm::vec3(0.0f), texCoords[7]}};
+  m_indices = std::vector<GLuint>{
+      0, 1, 2, 0, 2, 3, // front
+      4, 5, 6, 4, 6, 7, // back
+      0, 1, 5, 0, 5, 4, // left
+      2, 3, 7, 2, 7, 6, // right
+      1, 2, 6, 1, 6, 5, // top
+      0, 3, 7, 0, 7, 4  // bottom
+  };
+  m_textures = textures;
+  setup();
+}
+
+std::shared_ptr<Cube> Cube::createCube(std::vector<glm::vec3> position,
+                                       std::vector<glm::vec3> colors) {
+  return std::make_shared<Cube>(position, colors);
+}
+
+std::shared_ptr<Cube> Cube::createCube(std::vector<glm::vec3> position,
+                                       std::vector<glm::vec2> texCoords,
+                                       std::vector<Texture> textures) {
+  return std::make_shared<Cube>(position, texCoords, textures);
+}
+
+Cube::~Cube() {}

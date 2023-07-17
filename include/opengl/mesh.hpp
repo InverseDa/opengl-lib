@@ -1,5 +1,6 @@
 #pragma once
 #include "glad/glad.h"
+#include "glm/fwd.hpp"
 #include "glm/glm.hpp"
 #include "shader.hpp"
 #include <memory>
@@ -14,13 +15,6 @@ struct Vertex {
   glm::vec2 texCoords;
   glm::vec3 tangent;
   glm::vec3 bitangent;
-};
-
-struct SimpleVertex {
-  glm::vec3 position;
-  glm::vec3 color;
-  glm::vec3 normal;
-  glm::vec2 texCoords;
 };
 
 struct Texture {
@@ -52,37 +46,64 @@ public:
 
 class Triangle {
 protected:
+  struct __vertex {
+    glm::vec3 position;
+    glm::vec3 color;
+    glm::vec2 texCoords;
+  };
   GLuint m_VAO;
   GLuint m_VBO;
   GLuint m_EBO;
-  std::vector<SimpleVertex> m_vertices;
+  std::vector<__vertex> m_vertices;
   std::vector<GLuint> m_indices;
-  std::vector<glm::vec3> m_colors;
   std::vector<Texture> m_textures;
 
   void setup();
 
 public:
-  Triangle(std::vector<SimpleVertex> vertices);
-  Triangle(std::vector<SimpleVertex> vertices, std::vector<Texture> textures);
+  Triangle(std::vector<glm::vec3> position, std::vector<glm::vec3> colors = {});
+  Triangle(std::vector<glm::vec3> position,
+           std::vector<glm::vec2> texCoords = {},
+           std::vector<Texture> textures = {});
   ~Triangle();
 
-  std::shared_ptr<Triangle> createTriangle(std::vector<SimpleVertex> vertices);
-  std::shared_ptr<Triangle> createTriangle(std::vector<SimpleVertex> vertices,
-                                           std::vector<Texture> textures);
-  inline void draw(Shader &shader);
+  static std::shared_ptr<Triangle>
+  createTriangle(std::vector<glm::vec3> position,
+                 std::vector<glm::vec3> colors = {});
+
+  static std::shared_ptr<Triangle>
+  createTriangle(std::vector<glm::vec3> position,
+                 std::vector<glm::vec2> texCoords = {},
+                 std::vector<Texture> textures = {});
+  void draw(Shader &shader);
 };
 
-// class Quad : public Triangle {
-// protected:
-//   void setup();
+class Quad : public Triangle {
+public:
+  Quad(std::vector<glm::vec3> position, std::vector<glm::vec3> colors = {});
+  Quad(std::vector<glm::vec3> position, std::vector<glm::vec2> texCoords = {},
+       std::vector<Texture> textures = {});
+  ~Quad();
 
-// public:
-//   Quad(std::vector<SimpleVertex> vertices);
-//   Quad(std::vector<SimpleVertex> vertices, std::vector<Texture> textures);
-//   ~Quad();
-//   std::shared_ptr<Quad> createQuad(std::vector<SimpleVertex> vertices);
-//   std::shared_ptr<Quad> createQuad(std::vector<SimpleVertex> vertices,
-//                                    std::vector<Texture> textures);
-//   inline void draw(Shader &shader);
-// };
+  static std::shared_ptr<Quad> createQuad(std::vector<glm::vec3> position,
+                                          std::vector<glm::vec3> colors = {});
+
+  static std::shared_ptr<Quad> createQuad(std::vector<glm::vec3> position,
+                                          std::vector<glm::vec2> texCoords = {},
+                                          std::vector<Texture> textures = {});
+};
+
+class Cube : public Quad {
+public:
+  Cube(std::vector<glm::vec3> position, std::vector<glm::vec3> colors = {});
+  Cube(std::vector<glm::vec3> position, std::vector<glm::vec2> texCoords = {},
+       std::vector<Texture> textures = {});
+  ~Cube();
+
+  static std::shared_ptr<Cube> createCube(std::vector<glm::vec3> position,
+                                          std::vector<glm::vec3> colors = {});
+
+  static std::shared_ptr<Cube> createCube(std::vector<glm::vec3> position,
+                                          std::vector<glm::vec2> texCoords = {},
+                                          std::vector<Texture> textures = {});
+};
