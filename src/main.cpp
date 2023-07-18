@@ -53,6 +53,6 @@ int main() {
   window->mainLoop([&]() {
     glClearColor(1.0f, 0.0f, 0.0f, 1.0f);
     glClear(GL_COLOR_BUFFER_BIT);
-    cube->draw(*shader);
+    quad->draw(*shader);
   });
 }
