@@ -17,7 +17,7 @@ std::shared_ptr<Camera> Camera::createCamera(
 }
 
 void Camera::processKeyboard(int direction, float deltaTime) {
-    float velocity = 200.f * deltaTime;
+    float velocity = 2.f * deltaTime;
     if (direction == FORWARD)
         cameraPos += cameraFront * velocity;
     if (direction == BACKWARD)

@@ -37,6 +37,10 @@ void mouse(GLFWwindow* window, double xpos, double ypos) {
     camera->processMouseMovement(xOffset, yOffset);
 }
 
+void scroll(GLFWwindow* window, double xoffset, double yoffset) {
+    camera->processMouseScroll(yoffset);
+}
+
 int main() {
     auto window = GLFW::WindowWrapper::createWindow(800, 600, "Hello World");
     auto shader =
@@ -70,12 +74,8 @@ int main() {
         });
 
     window->setCursorPosCallback(mouse);
+    window->setScrollCallback(scroll);
 
-    auto projection = glm::perspective(glm::radians(camera->getFov()),
-                                       static_cast<float>(window->getWidth()) /
-                                           window->getHeight(),
-                                       0.1f,
-                                       100.0f);
     auto model = glm::scale(glm::mat4(1.f), glm::vec3(3.f));
 
     glfwSetInputMode(window->get(), GLFW_CURSOR, GLFW_CURSOR_DISABLED);
@@ -84,6 +84,12 @@ int main() {
         double currentFrame = glfwGetTime();
         deltaTime = currentFrame - lastFrame;
         lastFrame = currentFrame;
+
+        auto projection = glm::perspective(
+            glm::radians(camera->getFov()),
+            static_cast<float>(window->getWidth()) / window->getHeight(),
+            0.1f,
+            100.0f);
 
         processInput(window->get());
         glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
