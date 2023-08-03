@@ -140,13 +140,18 @@ void WindowWrapper::setWindowAspectRatioCallback(GLFWwindowsizefun callback) {
 }
 
 int WindowWrapper::getWidth() const { return m_width; }
+
 int WindowWrapper::getHeight() const { return m_height; }
+
 std::string WindowWrapper::getTitle() const { return m_title; }
+
 std::string WindowWrapper::getVersion() const { return m_version; }
+
 std::string WindowWrapper::getType() const {
     return m_type == CORE ? "CORE" : "COMPAT";
 }
 
 void WindowWrapper::swapBuffers() const { glfwSwapBuffers(window.get()); }
+
 void WindowWrapper::pollEvents() const { glfwPollEvents(); }
 } // namespace GLFW
