@@ -17,15 +17,21 @@ std::shared_ptr<Camera> Camera::createCamera(
 }
 
 void Camera::processKeyboard(int direction, float deltaTime) {
-    float velocity = 2.5f * deltaTime;
+    float velocity = 200.f * deltaTime;
     if (direction == FORWARD)
         cameraPos += cameraFront * velocity;
     if (direction == BACKWARD)
         cameraPos -= cameraFront * velocity;
     if (direction == LEFT)
-        cameraPos -= cameraRight * velocity;
+        cameraPos -=
+            glm::normalize(glm::cross(cameraFront, cameraUp)) * velocity;
+    // 飞机模式用：
+    // cameraPos -= cameraRight * velocity;
     if (direction == RIGHT)
-        cameraPos += cameraRight * velocity;
+        cameraPos +=
+            glm::normalize(glm::cross(cameraFront, cameraUp)) * velocity;
+    // 飞机模式用：
+    // cameraPos += cameraRight * velocity;
 }
 
 void Camera::processMouseMovement(float xoffset,
@@ -50,8 +56,9 @@ void Camera::processMouseMovement(float xoffset,
     front.z = cos(glm::radians(pitch)) * sin(glm::radians(yaw));
 
     cameraFront = glm::normalize(front);
-    cameraRight = glm::normalize(glm::cross(cameraFront, cameraUp));
-    cameraUp = glm::normalize(glm::cross(cameraRight, cameraFront));
+    // 以下参数一旦开启，那就是飞机模式（可以在空中360度旋转）
+    // cameraRight = glm::normalize(glm::cross(cameraFront, cameraUp));
+    // cameraUp = glm::normalize(glm::cross(cameraRight, cameraFront));
 }
 
 void Camera::processMouseScroll(float yoffset) {

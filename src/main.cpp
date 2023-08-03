@@ -7,20 +7,20 @@ auto camera = Camera::createCamera();
 
 bool firstMouse = true;
 double lastX = 400, lastY = 300;
+double deltaTime = 0, lastFrame = 0;
 
-void key(GLFWwindow* window, int key, int scancode, int action, int mods) {
-    if (key == GLFW_KEY_ESCAPE && action == GLFW_PRESS)
+void processInput(GLFWwindow* window) {
+    if (glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS)
         glfwSetWindowShouldClose(window, GLFW_TRUE);
     if (glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS)
-        camera->processKeyboard(FORWARD, 0.015f);
+        camera->processKeyboard(FORWARD, deltaTime);
     if (glfwGetKey(window, GLFW_KEY_S) == GLFW_PRESS)
-        camera->processKeyboard(BACKWARD, 0.015f);
+        camera->processKeyboard(BACKWARD, deltaTime);
     if (glfwGetKey(window, GLFW_KEY_A) == GLFW_PRESS)
-        camera->processKeyboard(LEFT, 0.015f);
+        camera->processKeyboard(LEFT, deltaTime);
     if (glfwGetKey(window, GLFW_KEY_D) == GLFW_PRESS)
-        camera->processKeyboard(RIGHT, 0.015f);
+        camera->processKeyboard(RIGHT, deltaTime);
 }
-
 void mouse(GLFWwindow* window, double xpos, double ypos) {
     if (firstMouse) {
         lastX = xpos;
@@ -53,8 +53,6 @@ int main() {
             glm::vec3(0.0f, 0.0f, 1.0f),
         });
 
-    window->setKeyCallback(key);
-
     window->setMouseButtonCallback(
         [](GLFWwindow* window, int button, int action, int mods) {
             if (button == GLFW_MOUSE_BUTTON_LEFT && action == GLFW_PRESS) {
@@ -83,6 +81,11 @@ int main() {
     glfwSetInputMode(window->get(), GLFW_CURSOR, GLFW_CURSOR_DISABLED);
 
     window->mainLoop([&]() {
+        double currentFrame = glfwGetTime();
+        deltaTime = currentFrame - lastFrame;
+        lastFrame = currentFrame;
+
+        processInput(window->get());
         glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
         glClear(GL_COLOR_BUFFER_BIT);
         shader->setMatrix4("model", model);
