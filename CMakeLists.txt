@@ -6,7 +6,8 @@ set(CMAKE_CXX_STANDARD 17)
 
 include_directories(${PROJECT_SOURCE_DIR}/include)
 
-add_executable(main src/glad.c src/glfw.cpp src/shader.cpp src/mesh.cpp src/main.cpp)
+file(GLOB SOURCES "src/*.cpp")
+add_executable(main src/glad.c ${SOURCES})
 
 if(LINUX)
     find_package(glfw3 REQUIRED)
