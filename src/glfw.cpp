@@ -11,6 +11,9 @@ Init::Init(int major_version, int minor_version, Type type) {
     glfwWindowHint(GLFW_OPENGL_PROFILE,
                    type == CORE ? GLFW_OPENGL_CORE_PROFILE
                                 : GLFW_OPENGL_COMPAT_PROFILE);
+#ifdef __APPLE__
+    glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
+#endif
 }
 
 Init& Init::getInstance(int major_version, int minor_version, Type type) {
