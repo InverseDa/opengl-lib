@@ -22,10 +22,15 @@ So you need to build it by yourself or use package manager(`apt`, `dnf`, `pacman
 Prepare the environment:
 `CMake`, `GCC`, `GLFW`, `GLAD`, `GLM`
 #### Arch Linux
+For X11 User:
 ```bash
 sudo pacman -S glfw-x11 glad glm
 ```
-In `CMakeLists.txt`, add the following lines between `if(LINUX) ... end(LINUX)`:
+For Wayland User:
+```bash
+sudo pacman -S glfw-wayland glad glm
+```
+Then in `CMakeLists.txt`, add the following lines between `if(LINUX) ... end(LINUX)`:
 ```cmake
 find_package(glfw3 REQUIRED)
 find_package(glm REQUIRED)
@@ -56,7 +61,7 @@ cmake -S . -B build -G "Visual Studio 16 2019" -A x64
 ```
 Then open `opengl-lib.sln` and build it.
 
-## Simple tutorials
+## Examples
 
 ### Init GLFW window
 
