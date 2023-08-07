@@ -1,10 +1,10 @@
-#include <opengl/camera.hpp>
-#include <opengl/glfw.hpp>
-#include <opengl/mesh.hpp>
-#include <opengl/shader.hpp>
+#include "opengl/camera.hpp"
+#include "opengl/glfw.hpp"
+#include "opengl/mesh.hpp"
+#include "opengl/shader.hpp"
 #include <vector>
-auto camera = Camera::createCamera();
 
+auto camera = Camera::createCamera();
 bool firstMouse = true;
 double lastX = 400, lastY = 300;
 double deltaTime = 0, lastFrame = 0;
@@ -28,13 +28,10 @@ void mouseMovementProcess(GLFWwindow* window, double xpos, double ypos) {
         lastY = ypos;
         firstMouse = false;
     }
-
-    //  注意方向问题
     float xOffset = xpos - lastX;
     float yOffset = lastY - ypos;
     lastX = xpos;
     lastY = ypos;
-
     camera->processMouseMovement(xOffset, yOffset);
 }
 
@@ -44,8 +41,7 @@ void mouseScrollProcess(GLFWwindow* window, double xoffset, double yoffset) {
 
 int main() {
     auto window = GLFW::WindowWrapper::createWindow(800, 600, "Hello World");
-    auto shader =
-        Shader::createShader("shader/vertex.glsl", "shader/fragment.glsl");
+    auto shader = Shader::createShader("shader/vertex.glsl", "shader/fragment.glsl");
 
     auto cube = Cube::createCube(
         std::vector<glm::vec3>{
@@ -78,13 +74,11 @@ int main() {
                           << std::endl;
             }
         });
-
     window->setScrollCallback(
         [](GLFWwindow* window, double xoffset, double yoffset) {
             std::cout << "Scroll offset: " << xoffset << ", " << yoffset
                       << std::endl;
         });
-
     window->setCursorPosCallback(mouseMovementProcess);
     window->setScrollCallback(mouseScrollProcess);
     window->setInputMode(GLFW_CURSOR, GLFW_CURSOR_DISABLED);
@@ -96,13 +90,11 @@ int main() {
         double currentFrame = glfwGetTime();
         deltaTime = currentFrame - lastFrame;
         lastFrame = currentFrame;
-
         auto projection = glm::perspective(
             glm::radians(camera->getFov()),
             static_cast<float>(window->getWidth()) / window->getHeight(),
             0.1f,
             100.0f);
-
         keyProcess(window->get());
         glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
