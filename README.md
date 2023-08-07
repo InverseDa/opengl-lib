@@ -15,10 +15,46 @@ Here are the key features and capabilities of OpenGL-lib:
 
 ## Usage
 ### Linux
+Unfortunately, we don't provide a pre-build library for Linux caused Linux has two display systems, 
+X11 and Wayland. We can't provide a library that can be used in both systems. 
+So you need to build it by yourself or use package manager(`apt`, `dnf`, `pacman`, etc). 
 
+Prepare the environment:
+`CMake`, `GCC`, `GLFW`, `GLAD`, `GLM`
+#### Arch Linux
+```bash
+sudo pacman -S glfw-x11 glad glm
+```
+In `CMakeLists.txt`, add the following lines between `if(LINUX) ... end(LINUX)`:
+```cmake
+find_package(glfw3 REQUIRED)
+find_package(glm REQUIRED)
+find_package(glad REQUIRED)
+target_link_libraries(${PROJECT_NAME} glfw glm glad)
+```
 ### Darwin
+Prepare the environment:
+`XCode Toolchain`
 
+For MacOS User, we provide GLFW, GLAD and GLM, you can use it directly.
+```bash
+git clone https://github.com/InverseDa/opengl-lib.git
+cd opengl-lib
+cmake -S . -B build
+cd build
+make
+```
 ### Windows
+Prepare the environment:
+`Visual Studio ToolChain`
+
+For Windows User, we provide GLFW, GLAD and GLM, you can use it directly.
+```bash
+git clone https://github.com/InverseDa/opengl-lib.git
+cd opengl-lib
+cmake -S . -B build -G "Visual Studio 16 2019" -A x64
+```
+Then open `opengl-lib.sln` and build it.
 
 ## Simple tutorials
 
