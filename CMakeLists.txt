@@ -18,3 +18,8 @@ if(WIN32)
     target_link_libraries(main PRIVATE ${PROJECT_SOURCE_DIR}/lib/windows-x86_64/glfw3.lib)
     target_link_libraries(main PRIVATE ${PROJECT_SOURCE_DIR}/lib/windows-x86_64/freetype.lib)
 endif(WIN32)
+
+if(APPLE)
+    target_link_libraries(main PRIVATE ${PROJECT_SOURCE_DIR}/lib/darwin-arm64/libglfw.3.dylib)   
+    target_link_libraries(main PRIVATE ${PROJECT_SOURCE_DIR}/lib/darwin-arm64/libglfw3.a)
+endif(APPLE)
