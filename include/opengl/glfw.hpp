@@ -74,6 +74,7 @@ class WindowWrapper {
     void setWindowPosCallback(GLFWwindowposfun callback);
     void setWindowSizeCallback(GLFWwindowsizefun callback);
     void setWindowAspectRatioCallback(GLFWwindowsizefun callback);
+    void setInputMode(int mode, int value);
     /**************** < Set Function And Method > ****************/
 
     /**************** < Get Function And Method > ****************/

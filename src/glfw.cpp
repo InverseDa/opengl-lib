@@ -139,6 +139,10 @@ void WindowWrapper::setWindowAspectRatioCallback(GLFWwindowsizefun callback) {
     glfwSetWindowSizeCallback(window.get(), callback);
 }
 
+void GLFW::WindowWrapper::setInputMode(int mode, int value) {
+    glfwSetInputMode(window.get(), mode, value);
+}
+
 int WindowWrapper::getWidth() const { return m_width; }
 
 int WindowWrapper::getHeight() const { return m_height; }
@@ -155,3 +159,4 @@ void WindowWrapper::swapBuffers() const { glfwSwapBuffers(window.get()); }
 
 void WindowWrapper::pollEvents() const { glfwPollEvents(); }
 } // namespace GLFW
+

@@ -322,16 +322,16 @@ extern "C" {
 
 /*! @name Key and button actions
  *  @{ */
-/*! @brief The key or mouse button was released.
+/*! @brief The key or mouseMovementProcess button was released.
  *
- *  The key or mouse button was released.
+ *  The key or mouseMovementProcess button was released.
  *
  *  @ingroup input
  */
 #define GLFW_RELEASE                0
-/*! @brief The key or mouse button was pressed.
+/*! @brief The key or mouseMovementProcess button was pressed.
  *
- *  The key or mouse button was pressed.
+ *  The key or mouseMovementProcess button was pressed.
  *
  *  @ingroup input
  */
@@ -564,7 +564,7 @@ extern "C" {
 /*! @defgroup buttons Mouse buttons
  *  @brief Mouse button IDs.
  *
- *  See [mouse button input](@ref input_mouse_button) for how these are used.
+ *  See [mouseMovementProcess button input](@ref input_mouse_button) for how these are used.
  *
  *  @ingroup input
  *  @{ */
@@ -1410,16 +1410,16 @@ typedef void (* GLFWframebuffersizefun)(GLFWwindow* window, int width, int heigh
  */
 typedef void (* GLFWwindowcontentscalefun)(GLFWwindow* window, float xscale, float yscale);
 
-/*! @brief The function pointer type for mouse button callbacks.
+/*! @brief The function pointer type for mouseMovementProcess button callbacks.
  *
- *  This is the function pointer type for mouse button callback functions.
- *  A mouse button callback function has the following signature:
+ *  This is the function pointer type for mouseMovementProcess button callback functions.
+ *  A mouseMovementProcess button callback function has the following signature:
  *  @code
  *  void function_name(GLFWwindow* window, int button, int action, int mods)
  *  @endcode
  *
  *  @param[in] window The window that received the event.
- *  @param[in] button The [mouse button](@ref buttons) that was pressed or
+ *  @param[in] button The [mouseMovementProcess button](@ref buttons) that was pressed or
  *  released.
  *  @param[in] action One of `GLFW_PRESS` or `GLFW_RELEASE`.  Future releases
  *  may add more actions.
@@ -1480,17 +1480,17 @@ typedef void (* GLFWcursorposfun)(GLFWwindow* window, double xpos, double ypos);
  */
 typedef void (* GLFWcursorenterfun)(GLFWwindow* window, int entered);
 
-/*! @brief The function pointer type for scroll callbacks.
+/*! @brief The function pointer type for mouseScrollProcess callbacks.
  *
- *  This is the function pointer type for scroll callbacks.  A scroll callback
+ *  This is the function pointer type for scroll callbacks.  A mouseScrollProcess callback
  *  function has the following signature:
  *  @code
  *  void function_name(GLFWwindow* window, double xoffset, double yoffset)
  *  @endcode
  *
  *  @param[in] window The window that received the event.
- *  @param[in] xoffset The scroll offset along the x-axis.
- *  @param[in] yoffset The scroll offset along the y-axis.
+ *  @param[in] xoffset The mouseScrollProcess offset along the x-axis.
+ *  @param[in] yoffset The mouseScrollProcess offset along the y-axis.
  *
  *  @sa @ref scrolling
  *  @sa @ref glfwSetScrollCallback
@@ -3760,7 +3760,7 @@ GLFWAPI GLFWwindowrefreshfun glfwSetWindowRefreshCallback(GLFWwindow* window, GL
  *  called when the window gains or loses input focus.
  *
  *  After the focus callback is called for a window that lost input focus,
- *  synthetic key and mouse button release events will be generated for all such
+ *  synthetic key and mouseMovementProcess button release events will be generated for all such
  *  that had been pressed.  For more information, see @ref glfwSetKeyCallback
  *  and @ref glfwSetMouseButtonCallback.
  *
@@ -4114,11 +4114,11 @@ GLFWAPI int glfwGetInputMode(GLFWwindow* window, int mode);
  *  pressed but not when or in which order.
  *
  *  If the mode is `GLFW_STICKY_MOUSE_BUTTONS`, the value must be either
- *  `GLFW_TRUE` to enable sticky mouse buttons, or `GLFW_FALSE` to disable it.
- *  If sticky mouse buttons are enabled, a mouse button press will ensure that
+ *  `GLFW_TRUE` to enable sticky mouseMovementProcess buttons, or `GLFW_FALSE` to disable it.
+ *  If sticky mouseMovementProcess buttons are enabled, a mouse button press will ensure that
  *  @ref glfwGetMouseButton returns `GLFW_PRESS` the next time it is called even
- *  if the mouse button had been released before the call.  This is useful when
- *  you are only interested in whether mouse buttons have been pressed but not
+ *  if the mouseMovementProcess button had been released before the call.  This is useful when
+ *  you are only interested in whether mouseMovementProcess buttons have been pressed but not
  *  when or in which order.
  *
  *  If the mode is `GLFW_LOCK_KEY_MODS`, the value must be either `GLFW_TRUE` to
@@ -4128,7 +4128,7 @@ GLFWAPI int glfwGetInputMode(GLFWwindow* window, int mode);
  *  and the @ref GLFW_MOD_NUM_LOCK bit when Num Lock was on.
  *
  *  If the mode is `GLFW_RAW_MOUSE_MOTION`, the value must be either `GLFW_TRUE`
- *  to enable raw (unscaled and unaccelerated) mouse motion when the cursor is
+ *  to enable raw (unscaled and unaccelerated) mouseMovementProcess motion when the cursor is
  *  disabled, or `GLFW_FALSE` to disable it.  If raw motion is not supported,
  *  attempting to set this will emit @ref GLFW_PLATFORM_ERROR.  Call @ref
  *  glfwRawMouseMotionSupported to check for support.
@@ -4152,20 +4152,20 @@ GLFWAPI int glfwGetInputMode(GLFWwindow* window, int mode);
  */
 GLFWAPI void glfwSetInputMode(GLFWwindow* window, int mode, int value);
 
-/*! @brief Returns whether raw mouse motion is supported.
+/*! @brief Returns whether raw mouseMovementProcess motion is supported.
  *
- *  This function returns whether raw mouse motion is supported on the current
+ *  This function returns whether raw mouseMovementProcess motion is supported on the current
  *  system.  This status does not change after GLFW has been initialized so you
  *  only need to check this once.  If you attempt to enable raw motion on
  *  a system that does not support it, @ref GLFW_PLATFORM_ERROR will be emitted.
  *
- *  Raw mouse motion is closer to the actual motion of the mouse across
+ *  Raw mouseMovementProcess motion is closer to the actual motion of the mouse across
  *  a surface.  It is not affected by the scaling and acceleration applied to
  *  the motion of the desktop cursor.  That processing is suitable for a cursor
  *  while raw motion is better for controlling for example a 3D camera.  Because
- *  of this, raw mouse motion is only provided when the cursor is disabled.
+ *  of this, raw mouseMovementProcess motion is only provided when the cursor is disabled.
  *
- *  @return `GLFW_TRUE` if raw mouse motion is supported on the current machine,
+ *  @return `GLFW_TRUE` if raw mouseMovementProcess motion is supported on the current machine,
  *  or `GLFW_FALSE` otherwise.
  *
  *  @errors Possible errors include @ref GLFW_NOT_INITIALIZED.
@@ -4312,19 +4312,19 @@ GLFWAPI int glfwGetKeyScancode(int key);
  */
 GLFWAPI int glfwGetKey(GLFWwindow* window, int key);
 
-/*! @brief Returns the last reported state of a mouse button for the specified
+/*! @brief Returns the last reported state of a mouseMovementProcess button for the specified
  *  window.
  *
- *  This function returns the last state reported for the specified mouse button
+ *  This function returns the last state reported for the specified mouseMovementProcess button
  *  to the specified window.  The returned state is one of `GLFW_PRESS` or
  *  `GLFW_RELEASE`.
  *
  *  If the @ref GLFW_STICKY_MOUSE_BUTTONS input mode is enabled, this function
- *  returns `GLFW_PRESS` the first time you call it for a mouse button that was
- *  pressed, even if that mouse button has already been released.
+ *  returns `GLFW_PRESS` the first time you call it for a mouseMovementProcess button that was
+ *  pressed, even if that mouseMovementProcess button has already been released.
  *
  *  @param[in] window The desired window.
- *  @param[in] button The desired [mouse button](@ref buttons).
+ *  @param[in] button The desired [mouseMovementProcess button](@ref buttons).
  *  @return One of `GLFW_PRESS` or `GLFW_RELEASE`.
  *
  *  @errors Possible errors include @ref GLFW_NOT_INITIALIZED and @ref
@@ -4669,13 +4669,13 @@ GLFWAPI GLFWcharfun glfwSetCharCallback(GLFWwindow* window, GLFWcharfun callback
  */
 GLFWAPI GLFWcharmodsfun glfwSetCharModsCallback(GLFWwindow* window, GLFWcharmodsfun callback);
 
-/*! @brief Sets the mouse button callback.
+/*! @brief Sets the mouseMovementProcess button callback.
  *
- *  This function sets the mouse button callback of the specified window, which
- *  is called when a mouse button is pressed or released.
+ *  This function sets the mouseMovementProcess button callback of the specified window, which
+ *  is called when a mouseMovementProcess button is pressed or released.
  *
- *  When a window loses input focus, it will generate synthetic mouse button
- *  release events for all pressed mouse buttons.  You can tell these events
+ *  When a window loses input focus, it will generate synthetic mouseMovementProcess button
+ *  release events for all pressed mouseMovementProcess buttons.  You can tell these events
  *  from user-generated events by the fact that the synthetic ones are generated
  *  after the focus loss event has been processed, i.e. after the
  *  [window focus callback](@ref glfwSetWindowFocusCallback) has been called.
@@ -4769,17 +4769,17 @@ GLFWAPI GLFWcursorposfun glfwSetCursorPosCallback(GLFWwindow* window, GLFWcursor
  */
 GLFWAPI GLFWcursorenterfun glfwSetCursorEnterCallback(GLFWwindow* window, GLFWcursorenterfun callback);
 
-/*! @brief Sets the scroll callback.
+/*! @brief Sets the mouseScrollProcess callback.
  *
- *  This function sets the scroll callback of the specified window, which is
- *  called when a scrolling device is used, such as a mouse wheel or scrolling
+ *  This function sets the mouseScrollProcess callback of the specified window, which is
+ *  called when a scrolling device is used, such as a mouseMovementProcess wheel or scrolling
  *  area of a touchpad.
  *
- *  The scroll callback receives all scrolling input, like that from a mouse
+ *  The mouseScrollProcess callback receives all scrolling input, like that from a mouseMovementProcess
  *  wheel or a touchpad scrolling area.
  *
  *  @param[in] window The window whose callback to set.
- *  @param[in] callback The new scroll callback, or `NULL` to remove the
+ *  @param[in] callback The new mouseScrollProcess callback, or `NULL` to remove the
  *  currently set callback.
  *  @return The previously set callback, or `NULL` if no callback was set or the
  *  library had not been [initialized](@ref intro_init).
