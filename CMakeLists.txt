@@ -7,7 +7,7 @@ set(CMAKE_CXX_STANDARD 17)
 include_directories(${PROJECT_SOURCE_DIR}/include)
 
 file(GLOB SOURCES "src/*.cpp")
-add_library(opengl_lib SHARED src/glad.c ${SOURCES})
+add_library(opengl_lib STATIC src/glad.c ${SOURCES})
 
 if(LINUX)
     find_package(glfw3 REQUIRED)
