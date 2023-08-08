@@ -22,10 +22,11 @@ class Shader {
     Shader(const char* vertexShaderCode, const char* fragmentShaderCode);
 
     static std::shared_ptr<Shader>
-    createShader(const std::string& vertexShaderPath,
+    createShaderByPath(const std::string& vertexShaderPath,
                  const std::string& fragmentShaderPath);
 
-    static std::shared_ptr<Shader> createShader(const char* vertexShaderCode,
+    static std::shared_ptr<Shader>
+    createShaderBySource(const char* vertexShaderCode,
                                                 const char* fragmentShaderCode);
 
     void use() const;

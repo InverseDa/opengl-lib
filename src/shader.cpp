@@ -1,22 +1,23 @@
 #include "opengl/shader.hpp"
 
 std::shared_ptr<Shader>
-Shader::createShader(const std::string& vertexShaderPath,
-                     const std::string& fragmentShaderPath) {
+Shader::createShaderByPath(const std::string& vertexShaderPath,
+                           const std::string& fragmentShaderPath) {
     return std::make_shared<Shader>(vertexShaderPath, fragmentShaderPath);
 }
 
-std::shared_ptr<Shader> Shader::createShader(const char* vertexShaderCode,
-                                             const char* fragmentShaderCode) {
+std::shared_ptr<Shader>
+Shader::createShaderBySource(const char* vertexShaderCode,
+                             const char* fragmentShaderCode) {
     return std::make_shared<Shader>(vertexShaderCode, fragmentShaderCode);
 }
 
 Shader::Shader(const std::string& vertexShaderPath,
                const std::string& fragmentShaderPath) {
     // Read shader source code
-    std::string vshAbsoulutePath =
+    std::string vshAbsolutePath =
         std::filesystem::absolute(vertexShaderPath).string();
-    std::string fshAbsoulutePath =
+    std::string fshAbsolutePath =
         std::filesystem::absolute(fragmentShaderPath).string();
 
     std::string vertexCode;
@@ -28,8 +29,8 @@ Shader::Shader(const std::string& vertexShaderPath,
     fShaderFile.exceptions(std::ifstream::failbit | std::ifstream::badbit);
     try {
         // Open files
-        vShaderFile.open(vshAbsoulutePath);
-        fShaderFile.open(fshAbsoulutePath);
+        vShaderFile.open(vshAbsolutePath);
+        fShaderFile.open(fshAbsolutePath);
         std::stringstream vShaderStream, fShaderStream;
         // Load file's buffer contents into streams
         vShaderStream << vShaderFile.rdbuf();

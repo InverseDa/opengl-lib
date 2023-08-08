@@ -107,7 +107,7 @@ const char* fsh = "#version 330 core\n"
 
 int main() {
     auto window = WindowWrapper::createWindow(800, 600, "Triangle");
-    auto shader = Shader::createShader(vsh, fsh);
+    auto shader = Shader::createShaderBySource(vsh, fsh);
     auto triangle = Triangle::createTriangle(
         std::vector<glm::vec3>{
             glm::vec3(-0.5f, -0.5f, 0.0f),
@@ -156,7 +156,7 @@ const char* fsh = "#version 330 core\n"
 
 int main() {
     auto window = WindowWrapper::createWindow(800, 600, "Rectangle");
-    auto shader = Shader::createShader(vsh, fsh);
+    auto shader = Shader::createShaderBySource(vsh, fsh);
     auto rectangle = Quad::createQuad(
         std::vector<glm::vec3>{
             glm::vec3(-0.5f, -0.5f, 0.0f),
