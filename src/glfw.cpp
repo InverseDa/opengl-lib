@@ -1,7 +1,6 @@
 #include "opengl/glfw.hpp"
 
 // Path: src/glfw.cpp
-namespace GLFW {
 Init::Init(int major_version, int minor_version, Type type) {
     if (!glfwInit()) {
         throw std::runtime_error("Failed to initialize GLFW.");
@@ -161,5 +160,4 @@ std::string WindowWrapper::getType() const {
 void WindowWrapper::swapBuffers() const { glfwSwapBuffers(window.get()); }
 
 void WindowWrapper::pollEvents() const { glfwPollEvents(); }
-} // namespace GLFW
 

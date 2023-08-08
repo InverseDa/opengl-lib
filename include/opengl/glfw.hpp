@@ -11,7 +11,6 @@ enum Type { CORE, COMPAT };
 
 #include <GLFW/glfw3.h>
 
-namespace GLFW {
 class Init {
   private:
     Init(int majar_version = 3, int minor_versio = 3, Type type = CORE);
@@ -89,4 +88,3 @@ class WindowWrapper {
     void mainLoop(std::function<void()> callback) const;
     /**************** <         MainLoop        > ****************/
 };
-} // namespace GLFW
