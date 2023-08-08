@@ -13,6 +13,18 @@ Here are the key features and capabilities of OpenGL-lib:
 
 5. Cross-platform support: With cross-platform support in mind, OpenGL-lib can be used on multiple operating systems, including Windows, Linux, and macOS. This allows developers to conveniently develop and deploy OpenGL applications across different platforms.
 
+## TODO
+- [x] GLFW
+- [x] GLAD
+- [x] GLM
+- [x] Shader
+- [x] Mesh
+- [x] Texture
+- [x] Camera
+- [x] FrameBuffer
+- [x] GBuffers
+- [ ] Model
+
 ## Usage
 ### Linux
 Unfortunately, we don't provide a pre-build library for Linux caused Linux has two display systems, 
