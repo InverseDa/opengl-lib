@@ -22,7 +22,7 @@ const char* fsh = "#version 330 core\n"
     "}\0";
 
 int main() {
-    auto window = GLFW::WindowWrapper::createWindow(800, 600, "Triangle");
+    auto window = WindowWrapper::createWindow(800, 600, "Triangle");
     auto shader = Shader::createShader(vsh, fsh);
     auto triangle = Triangle::createTriangle(
         std::vector<glm::vec3>{

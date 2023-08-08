@@ -22,7 +22,7 @@ const char* fsh = "#version 330 core\n"
     "}\0";
 
 int main() {
-    auto window = GLFW::WindowWrapper::createWindow(800, 600, "Rectangle");
+    auto window = WindowWrapper::createWindow(800, 600, "Rectangle");
     auto shader = Shader::createShader(vsh, fsh);
     auto rectangle = Quad::createQuad(
         std::vector<glm::vec3>{

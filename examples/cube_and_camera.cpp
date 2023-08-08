@@ -40,7 +40,7 @@ void mouseScrollProcess(GLFWwindow* window, double xoffset, double yoffset) {
 }
 
 int main() {
-    auto window = GLFW::WindowWrapper::createWindow(800, 600, "Hello World");
+    auto window = WindowWrapper::createWindow(800, 600, "Hello World");
     auto shader = Shader::createShader("shader/vertex.glsl", "shader/fragment.glsl");
 
     auto cube = Cube::createCube(

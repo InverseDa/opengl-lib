@@ -69,7 +69,7 @@ Then open `opengl-lib.sln` and build it.
 #include <opengl/glfw.hpp>
 
 int main() {
-    auto window = GLFW::WindowWrapper::createWindow(800, 600, "Hello World");
+    auto window = WindowWrapper::createWindow(800, 600, "Hello World");
     window->mainLoop([&]() {
         glClearColor(1.0f, 0.0f, 0.0f, 1.0f);
         glClear(GL_COLOR_BUFFER_BIT);
@@ -106,7 +106,7 @@ const char* fsh = "#version 330 core\n"
                   "}\0";
 
 int main() {
-    auto window = GLFW::WindowWrapper::createWindow(800, 600, "Triangle");
+    auto window = WindowWrapper::createWindow(800, 600, "Triangle");
     auto shader = Shader::createShader(vsh, fsh);
     auto triangle = Triangle::createTriangle(
         std::vector<glm::vec3>{
@@ -155,7 +155,7 @@ const char* fsh = "#version 330 core\n"
                   "}\0";
 
 int main() {
-    auto window = GLFW::WindowWrapper::createWindow(800, 600, "Rectangle");
+    auto window = WindowWrapper::createWindow(800, 600, "Rectangle");
     auto shader = Shader::createShader(vsh, fsh);
     auto rectangle = Quad::createQuad(
         std::vector<glm::vec3>{

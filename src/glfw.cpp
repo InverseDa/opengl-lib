@@ -141,7 +141,7 @@ void WindowWrapper::setWindowAspectRatioCallback(GLFWwindowsizefun callback) {
     glfwSetWindowSizeCallback(window.get(), callback);
 }
 
-void GLFW::WindowWrapper::setInputMode(int mode, int value) {
+void WindowWrapper::setInputMode(int mode, int value) {
     glfwSetInputMode(window.get(), mode, value);
 }
 
