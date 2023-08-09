@@ -4,7 +4,6 @@
 
 #include <iostream>
 
-
 class FrameBuffer {
   protected:
     int m_width;
@@ -14,6 +13,8 @@ class FrameBuffer {
     GLuint m_texture;
 
   public:
+    static std::shared_ptr<FrameBuffer> createFrameBuffer(int width,
+                                                          int height);
     FrameBuffer(int width, int height);
     ~FrameBuffer();
 
@@ -36,6 +37,7 @@ class GBuffer {
     GLuint m_albedoSpec;
 
   public:
+    static std::shared_ptr<GBuffer> createGBuffer(int width, int height);
     GBuffer(int width, int height);
     ~GBuffer();
 

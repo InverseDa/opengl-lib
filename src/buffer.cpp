@@ -1,5 +1,10 @@
 #include "opengl/buffer.hpp"
 
+std::shared_ptr<FrameBuffer> FrameBuffer::createFrameBuffer(int width,
+                                                            int height) {
+    return std::make_shared<FrameBuffer>(width, height);
+}
+
 FrameBuffer::FrameBuffer(int width, int height)
     : m_width(width),
       m_height(height) {
@@ -81,6 +86,10 @@ void FrameBuffer::resize(int width, int height) {
 }
 
 GLuint FrameBuffer::getTexture() const { return m_texture; }
+
+std::shared_ptr<GBuffer> GBuffer::createGBuffer(int width, int height) {
+    return std::make_shared<GBuffer>(width, height);
+}
 
 GBuffer::GBuffer(int width, int height) : m_width(width), m_height(height) {
     glGenFramebuffers(1, &m_fbo);
@@ -235,3 +244,4 @@ GLuint GBuffer::getPosition() const { return m_position; }
 GLuint GBuffer::getNormal() const { return m_normal; }
 
 GLuint GBuffer::getAlbedoSpec() const { return m_albedoSpec; }
+
