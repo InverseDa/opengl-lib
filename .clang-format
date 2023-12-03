@@ -16,3 +16,4 @@ AllowAllConstructorInitializersOnNextLine: false
 BinPackArguments: false
 BinPackParameters: false
 IncludeBlocks: Regroup
+ColumnLimit: 0

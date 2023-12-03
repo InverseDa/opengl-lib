@@ -2,6 +2,7 @@
 #include "opengl/glfw.hpp"
 #include "opengl/mesh.hpp"
 #include "opengl/shader.hpp"
+
 #include <vector>
 
 auto camera = Camera::createCamera();
@@ -41,7 +42,7 @@ void mouseScrollProcess(GLFWwindow* window, double xoffset, double yoffset) {
 
 int main() {
     auto window = WindowWrapper::createWindow(800, 600, "Hello World");
-    auto shader = Shader::createShader("shader/vertex.glsl", "shader/fragment.glsl");
+    auto shader = Shader::createShaderByPath("shader/vertex.glsl", "shader/fragment.glsl");
 
     auto cube = Cube::createCube(
         std::vector<glm::vec3>{
@@ -65,20 +66,18 @@ int main() {
             glm::vec3(0.0f, 0.0f, 0.0f), // 7
         });
 
-    window->setMouseButtonCallback(
-        [](GLFWwindow* window, int button, int action, int mods) {
-            if (button == GLFW_MOUSE_BUTTON_LEFT && action == GLFW_PRESS) {
-                double xpos, ypos;
-                glfwGetCursorPos(window, &xpos, &ypos);
-                std::cout << "Mouse position: " << xpos << ", " << ypos
-                          << std::endl;
-            }
-        });
-    window->setScrollCallback(
-        [](GLFWwindow* window, double xoffset, double yoffset) {
-            std::cout << "Scroll offset: " << xoffset << ", " << yoffset
+    window->setMouseButtonCallback([](GLFWwindow* window, int button, int action, int mods) {
+        if (button == GLFW_MOUSE_BUTTON_LEFT && action == GLFW_PRESS) {
+            double xpos, ypos;
+            glfwGetCursorPos(window, &xpos, &ypos);
+            std::cout << "Mouse position: " << xpos << ", " << ypos
                       << std::endl;
-        });
+        }
+    });
+    window->setScrollCallback([](GLFWwindow* window, double xoffset, double yoffset) {
+        std::cout << "Scroll offset: " << xoffset << ", " << yoffset
+                  << std::endl;
+    });
     window->setCursorPosCallback(mouseMovementProcess);
     window->setScrollCallback(mouseScrollProcess);
     window->setInputMode(GLFW_CURSOR, GLFW_CURSOR_DISABLED);

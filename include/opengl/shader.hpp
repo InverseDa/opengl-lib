@@ -23,15 +23,17 @@ class Shader {
 
     static std::shared_ptr<Shader>
     createShaderByPath(const std::string& vertexShaderPath,
-                 const std::string& fragmentShaderPath);
+                       const std::string& fragmentShaderPath);
 
     static std::shared_ptr<Shader>
     createShaderBySource(const char* vertexShaderCode,
-                                                const char* fragmentShaderCode);
+                         const char* fragmentShaderCode);
 
     void use() const;
 
-    // uniform工具函数
+    unsigned int getId() const;
+
+    // uniform tools
     void setBool(const std::string& name, bool value) const;
 
     void setInt(const std::string& name, int value) const;
@@ -46,8 +48,7 @@ class Shader {
 
     void setVector3(const std::string& name, glm::vec3 vec) const;
 
-    void setVector4(
-        const std::string& name, float x, float y, float z, float w) const;
+    void setVector4(const std::string& name, float x, float y, float z, float w) const;
 
     void setVector4(const std::string& name, glm::vec4 vec) const;
 

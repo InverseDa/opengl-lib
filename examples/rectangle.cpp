@@ -3,7 +3,8 @@
 #include <opengl/shader.hpp>
 #include <vector>
 
-const char* vsh = "#version 330 core\n"
+const char* vsh =
+    "#version 330 core\n"
     "layout (location = 0) in vec3 aPos;\n"
     "layout (location = 1) in vec3 aColor;\n"
     "out vec3 ourColor;\n"
@@ -13,7 +14,8 @@ const char* vsh = "#version 330 core\n"
     "   ourColor = aColor;\n"
     "}\0";
 
-const char* fsh = "#version 330 core\n"
+const char* fsh =
+    "#version 330 core\n"
     "out vec4 FragColor;\n"
     "in vec3 ourColor;\n"
     "void main()\n"
@@ -23,7 +25,7 @@ const char* fsh = "#version 330 core\n"
 
 int main() {
     auto window = WindowWrapper::createWindow(800, 600, "Rectangle");
-    auto shader = Shader::createShader(vsh, fsh);
+    auto shader = Shader::createShaderBySource(vsh, fsh);
     auto rectangle = Quad::createQuad(
         std::vector<glm::vec3>{
             glm::vec3(-0.5f, -0.5f, 0.0f),
@@ -36,8 +38,7 @@ int main() {
             glm::vec3(0.0f, 1.0f, 0.0f),
             glm::vec3(0.0f, 0.0f, 1.0f),
             glm::vec3(1.0f, 1.0f, 1.0f),
-        }
-    );
+        });
     window->mainLoop([&]() {
         glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
         glClear(GL_COLOR_BUFFER_BIT);
